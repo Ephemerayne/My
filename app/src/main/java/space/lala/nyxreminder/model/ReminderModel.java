@@ -6,12 +6,14 @@ public class ReminderModel {
     private final String title;
     private final String description;
     private final Date dateTime;
+    private int id;
 
 
-    public ReminderModel(String title, String description, Date dateTime) {
+    public ReminderModel(String title, String description, Date dateTime, int id) {
         this.title = title;
         this.description = description;
         this.dateTime = dateTime;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -24,5 +26,10 @@ public class ReminderModel {
 
     public Date getDateTime() {
         return dateTime;
+
+    }
+
+    public int getId() {
+        return id;
     }
 }
