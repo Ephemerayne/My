@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteX="75dp"
+    tools:layout_editor_absoluteY="62dp">
+
+    <TextView
+        android:id="@+id/view_date_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/graphite"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="DATETIME" />
+
+    <TextView
+        android:id="@+id/view_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/graphite"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="TITLE" />
+
+    <TextView
+        android:id="@+id/view_dialog_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/graphite"
+        tools:text="DESCRIPTION" />
+
+    <Button
+        android:id="@+id/view_dialog_button_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/edit_button" />
+</LinearLayout>

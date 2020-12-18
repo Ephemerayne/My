@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Nyx.Reminder</string>
+    <string name="edit_button">Изменить</string>
 </resources>
