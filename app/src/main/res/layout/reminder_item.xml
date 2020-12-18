@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -14,6 +14,8 @@
 
         <TextView
             android:id="@+id/view_date"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -26,6 +28,8 @@
 
             <TextView
                 android:id="@+id/view_title"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -33,19 +37,23 @@
 
             <TextView
                 android:id="@+id/view_time"
+                android:textStyle="bold"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:gravity="center"
+                android:gravity="end"
                 tools:text="TIME" />
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/view_description"
+            android:layout_marginBottom="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="DESCRIPTION" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
