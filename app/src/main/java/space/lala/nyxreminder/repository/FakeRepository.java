@@ -39,6 +39,6 @@ public class FakeRepository implements ReminderRepository {
 
     @Override
     public void deleteReminder(int id) {
-
+        System.out.println("debug: " + id);
     }
 }

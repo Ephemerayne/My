@@ -7,6 +7,7 @@ public class ReminderModel {
     private final String description;
     private final Date dateTime;
     private int id;
+    private boolean isSelected = false;
 
 
     public ReminderModel(String title, String description, Date dateTime, int id) {
@@ -32,4 +33,14 @@ public class ReminderModel {
     public int getId() {
         return id;
     }
+
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }
+

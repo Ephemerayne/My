@@ -24,5 +24,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.98"
         app:srcCompat="@android:drawable/ic_menu_edit"
-        android:backgroundTint="#52AFE1" />
+        android:backgroundTint="@color/light_blue" />
 </androidx.constraintlayout.widget.ConstraintLayout>
