@@ -42,4 +42,9 @@ public class FakeRepository implements ReminderRepository {
     public void deleteReminder(int id) {
         System.out.println("debug: " + id);
     }
+
+    @Override
+    public void addReminder(ReminderModel reminderModel) {
+        System.out.println("debug insert: " + reminderModel.getTitle());
+    }
 }

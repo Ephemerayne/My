@@ -1,5 +1,6 @@
 package space.lala.nyxreminder;
 
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import org.threeten.bp.LocalDateTime;
+
 import java.util.Objects;
+
+import space.lala.nyxreminder.model.ReminderModel;
+import space.lala.nyxreminder.repository.FakeRepository;
+import space.lala.nyxreminder.repository.ReminderRepository;
+
 
 public class EditReminderDialog extends DialogFragment {
 
@@ -45,7 +53,7 @@ public class EditReminderDialog extends DialogFragment {
         cancel.setOnClickListener(view -> dismiss());
 
         save.setOnClickListener(view -> {
-
+            saveReminder(createReminder());
         });
     }
 
@@ -57,4 +65,21 @@ public class EditReminderDialog extends DialogFragment {
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         getDialog().getWindow().setAttributes(params);
     }
+
+    // метод создания напоминания
+    private ReminderModel createReminder() {
+
+        //Берет данные из UI (ввода пользователя) и делает модель Ремайндера
+        String reminderTitle = title.getText().toString();
+        String reminderDescription = description.getText().toString();
+        LocalDateTime dateTime = LocalDateTime.now();
+        return new ReminderModel(reminderTitle, reminderDescription, dateTime, 5);
+    }
+
+    //метод сохранения напоминания в БД
+    private void saveReminder(ReminderModel reminderModel) {
+        ReminderRepository reminderRepository = new FakeRepository();
+        reminderRepository.addReminder(reminderModel);
+    }
 }
+
