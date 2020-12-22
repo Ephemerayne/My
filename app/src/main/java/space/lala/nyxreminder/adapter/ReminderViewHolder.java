@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.threeten.bp.format.DateTimeFormatter;
+
 import java.util.Date;
 
 import space.lala.nyxreminder.OnReminderListener;
@@ -33,16 +36,18 @@ public class ReminderViewHolder extends RecyclerView.ViewHolder implements View.
 
     }
 
-    public void setItemContent(ReminderModel reminderModel) {
-        String dateString = android.text.format.DateFormat.format("dd.MM.yy", new Date()).toString();
-        String timeString = android.text.format.DateFormat.format("hh:mm", new Date()).toString();
+    public void setItemContent(ReminderModel model) {
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+        final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm");
+        String dateString = dateFormatter.format(model.getDateTime());
+        String timeString = timeFormatter.format(model.getDateTime());
 
-        title.setText(reminderModel.getTitle());
-        description.setText(reminderModel.getDescription());
+        title.setText(model.getTitle());
+        description.setText(model.getDescription());
         date.setText(dateString);
         time.setText(timeString);
 
-        if (reminderModel.isSelected()) {
+        if (model.isSelected()) {
             itemView.setBackgroundColor(itemView.getResources().getColor(R.color.light_blue));
         } else {
             itemView.setBackgroundColor(itemView.getResources().getColor(android.R.color.transparent));

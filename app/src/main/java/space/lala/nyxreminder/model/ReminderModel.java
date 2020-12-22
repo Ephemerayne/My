@@ -1,16 +1,16 @@
 package space.lala.nyxreminder.model;
 
-import java.util.Date;
+import org.threeten.bp.LocalDateTime;
 
 public class ReminderModel {
     private final String title;
     private final String description;
-    private final Date dateTime;
+    private final LocalDateTime dateTime;
     private int id;
     private boolean isSelected = false;
 
 
-    public ReminderModel(String title, String description, Date dateTime, int id) {
+    public ReminderModel(String title, String description, LocalDateTime dateTime, int id) {
         this.title = title;
         this.description = description;
         this.dateTime = dateTime;
@@ -25,7 +25,7 @@ public class ReminderModel {
         return description;
     }
 
-    public Date getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
 
     }
