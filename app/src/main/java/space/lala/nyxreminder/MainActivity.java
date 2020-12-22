@@ -78,11 +78,12 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
                 reminder.setSelected(!reminder.isSelected());
                 // управление массивом айтемов для удаления. Добавление/удаление айдишников айтемов в массив. И управление режимом выбора элементов
                 manageItemsToRemove(reminder);
-                setSelectModeActive(reminder);
+                setSelectModeActive();
             }
         }
         //установка айтемов обратно в адаптер из массива reminders
         adapter.setReminders(reminders);
+        showDeleteButton(isSelectModeActive);
     }
 
     @Override
@@ -96,11 +97,14 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
                 //мы сделаем с ним следующее:
                 reminder.setSelected(!reminder.isSelected());
                 manageItemsToRemove(reminder);
-                setSelectModeActive(reminder);
+                setSelectModeActive();
             }
         }
 
         adapter.setReminders(reminders);
+
+        //Передача текущего режима выбора isSelectModeActive для показа/сокрытия корзины в экшн баре
+        showDeleteButton(isSelectModeActive);
     }
 
     @Override
@@ -142,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
         //присваивание id из layout иконки для переменной
         deleteMenuItem = menu.findItem(R.id.icon_trash_basket);
 
-        //кликабельность иконки
-        deleteMenuItem.setEnabled(true);
+        //кликабельность и видимость иконки
+        showDeleteButton(false);
         return true;
     }
 
@@ -172,7 +176,8 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
         }
     }
 
-    private void setSelectModeActive(ReminderModel reminder) {
+    //метод активации экрана выбора айтемов
+    private void setSelectModeActive() {
 
         // если список массива выделенных для удаления айтемов пуст
         if (itemsToRemove.isEmpty()) {
