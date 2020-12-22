@@ -25,9 +25,9 @@ public class ViewReminderDialog extends DialogFragment {
     private static final String idKey = "idKey";
     private int id;
     private ReminderRepository reminderRepository = new FakeRepository();
-    TextView dateTime;
-    TextView title;
-    TextView description;
+    private TextView dateTime;
+    private TextView title;
+    private TextView description;
 
     public static ViewReminderDialog newInstance(int id) {
         ViewReminderDialog viewReminderDialog = new ViewReminderDialog();
@@ -59,6 +59,7 @@ public class ViewReminderDialog extends DialogFragment {
         return view;
     }
 
+    //Программная настройка ширины диалогового окна
     @Override
     public void onResume() {
         super.onResume();

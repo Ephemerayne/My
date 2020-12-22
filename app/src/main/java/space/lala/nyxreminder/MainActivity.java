@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
     ReminderAdapter adapter;
     ReminderRepository fakeRepository = new FakeRepository();
     ImageView trashBasket;
+    FloatingActionButton addReminderButton;
 
     //корзина в экшн баре
     private MenuItem deleteMenuItem;
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
 
         trashBasket = findViewById(R.id.icon_trash_basket);
         recyclerViewReminder = findViewById(R.id.recycler_view_reminders);
+        addReminderButton = findViewById(R.id.add_button);
 
         //установка адаптера со слушателем кликов и зажатий
         adapter = new ReminderAdapter(this);
@@ -53,6 +59,22 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
         //установка ресайклера и адаптера к нему
         recyclerViewReminder.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewReminder.setAdapter(adapter);
+
+        //обработка клика по плавающей кнопке добавления напоминания
+        addReminderButton.setOnClickListener(view -> openEditDialog());
+    }
+
+    //метод открытия диалога редактирования напоминания
+    private void openEditDialog() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        EditReminderDialog editReminderDialog = new EditReminderDialog();
+        editReminderDialog.show(transaction, "TAG");
+    }
+
+    //метод открытия диалога просмотра напоминания
+    private void openViewDialog(int id) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ViewReminderDialog.newInstance(id).show(transaction, "tag");
     }
 
     @Override
@@ -61,8 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
 
         //условие: если не активен режим выбора айтемов (напоминания), то при нажатии открывается диалоговое окно информации о напоминании и его редактирование
         if (!isSelectModeActive) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            ViewReminderDialog.newInstance(id).show(transaction, "tag");
+           openViewDialog(id);
         }
 
         //Массив напоминаний, взятых из адаптера

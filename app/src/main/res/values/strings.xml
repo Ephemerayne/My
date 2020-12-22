@@ -3,4 +3,8 @@
     <string name="edit_button">Изменить</string>
     <string name="on_date_in_time">%s в %s</string>
     <string name="delete">Удалить</string>
+    <string name="title_edit_text">Название</string>
+    <string name="description_edit_text">Описание</string>
+    <string name="button_save_reminder">Сохранить</string>
+    <string name="button_cancel_edit_reminder">Отмена</string>
 </resources>
