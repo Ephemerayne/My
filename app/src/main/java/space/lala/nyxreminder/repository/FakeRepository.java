@@ -2,6 +2,7 @@ package space.lala.nyxreminder.repository;
 
 import org.threeten.bp.LocalDateTime;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 import space.lala.nyxreminder.model.ReminderModel;
@@ -45,6 +46,6 @@ public class FakeRepository implements ReminderRepository {
 
     @Override
     public void addReminder(ReminderModel reminderModel) {
-        System.out.println("debug insert: " + reminderModel.getTitle());
+
     }
 }
