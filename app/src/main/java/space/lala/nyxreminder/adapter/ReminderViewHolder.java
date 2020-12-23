@@ -40,7 +40,7 @@ public class ReminderViewHolder extends RecyclerView.ViewHolder implements View.
         this.reminderId = model.getId();
 
         final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
-        final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm");
+        final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         String dateString = dateFormatter.format(model.getDateTime());
         String timeString = timeFormatter.format(model.getDateTime());
 
@@ -64,7 +64,7 @@ public class ReminderViewHolder extends RecyclerView.ViewHolder implements View.
 
     @Override
     public boolean onLongClick(View view) {
-        onReminderListener.onReminderLongClick(getAdapterPosition());
+        onReminderListener.onReminderLongClick(reminderId);
         return true;
     }
 }

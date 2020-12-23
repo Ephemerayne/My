@@ -1,7 +1,9 @@
 package space.lala.nyxreminder;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -122,6 +124,7 @@ public class AddEditReminderDialog extends DialogFragment {
         DBHelper dbHelper = new DBHelper(getContext());
         ReminderRepository repository = new SqliteRepository(dbHelper);
         repository.addReminder(reminderModel);
+        dismiss();
     }
 
     //метод заполнения дефолтных значений времени и даты
@@ -189,6 +192,15 @@ public class AddEditReminderDialog extends DialogFragment {
         //установка времени в TextView
         time.setText(dateTimeFormatter.format(localTime));
         reminderTime = localTime;
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        final Activity activity = getActivity();
+        if (activity instanceof  DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
     }
 }
 

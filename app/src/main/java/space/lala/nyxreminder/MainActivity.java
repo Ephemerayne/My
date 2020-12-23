@@ -2,10 +2,12 @@ package space.lala.nyxreminder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +24,7 @@ import space.lala.nyxreminder.model.ReminderModel;
 import space.lala.nyxreminder.repository.ReminderRepository;
 import space.lala.nyxreminder.repository.SqliteRepository;
 
-public class MainActivity extends AppCompatActivity implements OnReminderListener {
+public class MainActivity extends AppCompatActivity implements OnReminderListener, DialogInterface.OnDismissListener {
 
     //ресайклер (для генерируемого списка), адаптер (для ресайклера) и БД
     private RecyclerView recyclerViewReminder;
@@ -55,15 +57,16 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
         adapter = new ReminderAdapter(this);
 
         //установка списка айтемов в адаптер
-        //айтемы приходят из БД.
-        adapter.setReminders(repository.getAllReminders());
+
+        //Метод (айтемы приходят из БД)
+        requestReminders();
 
         //установка ресайклера и адаптера к нему
         recyclerViewReminder.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewReminder.setAdapter(adapter);
 
         //обработка клика по плавающей кнопке добавления напоминания
-        addReminderButton.setOnClickListener(view -> openEditDialog());
+        addReminderButton.setOnClickListener(view -> openAddEditDialog());
     }
 
     private void initDb() {
@@ -72,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
     }
 
     //метод открытия диалога редактирования напоминания
-    private void openEditDialog() {
+    private void openAddEditDialog() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        AddEditReminderDialog addEditReminderDialog = new AddEditReminderDialog();
+        DialogFragment addEditReminderDialog = new AddEditReminderDialog();
         addEditReminderDialog.show(transaction, "TAG");
     }
 
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
 
         //условие: если не активен режим выбора айтемов (напоминания), то при нажатии открывается диалоговое окно информации о напоминании и его редактирование
         if (!isSelectModeActive) {
-           openViewDialog(id);
+            openViewDialog(id);
         }
 
         //Массив напоминаний, взятых из адаптера
@@ -217,5 +220,15 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
         } else {
             isSelectModeActive = true;
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        requestReminders();
+    }
+
+    private void requestReminders() {
+        //айтемы приходят из БД.
+        adapter.setReminders(repository.getAllReminders());
     }
 }
