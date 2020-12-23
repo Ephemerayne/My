@@ -22,9 +22,12 @@ import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
 import org.threeten.bp.format.DateTimeFormatter;
 import java.util.Objects;
+
+import space.lala.nyxreminder.database.DBHelper;
 import space.lala.nyxreminder.model.ReminderModel;
 import space.lala.nyxreminder.repository.FakeRepository;
 import space.lala.nyxreminder.repository.ReminderRepository;
+import space.lala.nyxreminder.repository.SqliteRepository;
 
 
 public class AddEditReminderDialog extends DialogFragment {
@@ -116,8 +119,9 @@ public class AddEditReminderDialog extends DialogFragment {
 
     //метод сохранения напоминания в БД
     private void saveReminder(ReminderModel reminderModel) {
-        ReminderRepository reminderRepository = new FakeRepository();
-        reminderRepository.addReminder(reminderModel);
+        DBHelper dbHelper = new DBHelper(getContext());
+        ReminderRepository repository = new SqliteRepository(dbHelper);
+        repository.addReminder(reminderModel);
     }
 
     //метод заполнения дефолтных значений времени и даты

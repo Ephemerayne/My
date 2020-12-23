@@ -17,16 +17,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import space.lala.nyxreminder.adapter.ReminderAdapter;
+import space.lala.nyxreminder.database.DBHelper;
 import space.lala.nyxreminder.model.ReminderModel;
-import space.lala.nyxreminder.repository.FakeRepository;
 import space.lala.nyxreminder.repository.ReminderRepository;
+import space.lala.nyxreminder.repository.SqliteRepository;
 
 public class MainActivity extends AppCompatActivity implements OnReminderListener {
 
     //ресайклер (для генерируемого списка), адаптер (для ресайклера) и БД
     private RecyclerView recyclerViewReminder;
     ReminderAdapter adapter;
-    ReminderRepository fakeRepository = new FakeRepository();
+    DBHelper dbHelper;
+    ReminderRepository repository;
     ImageView trashBasket;
     FloatingActionButton addReminderButton;
 
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initDb();
+
         trashBasket = findViewById(R.id.icon_trash_basket);
         recyclerViewReminder = findViewById(R.id.recycler_view_reminders);
         addReminderButton = findViewById(R.id.add_button);
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
 
         //установка списка айтемов в адаптер
         //айтемы приходят из БД.
-        adapter.setReminders(fakeRepository.getAllReminders());
+        adapter.setReminders(repository.getAllReminders());
 
         //установка ресайклера и адаптера к нему
         recyclerViewReminder.setLayoutManager(new LinearLayoutManager(this));
@@ -60,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
 
         //обработка клика по плавающей кнопке добавления напоминания
         addReminderButton.setOnClickListener(view -> openEditDialog());
+    }
+
+    private void initDb() {
+        dbHelper = new DBHelper(this);
+        repository = new SqliteRepository(dbHelper);
     }
 
     //метод открытия диалога редактирования напоминания
@@ -149,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
         for (int id : itemsToRemove) {
 
             //удаление напоминания (по id) из БД (фейкового репозитория)
-            fakeRepository.deleteReminder(id);
+            repository.deleteReminder(id);
         }
     }
 

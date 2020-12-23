@@ -1,7 +1,6 @@
 package space.lala.nyxreminder;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +14,18 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Date;
 import java.util.Objects;
 
+import space.lala.nyxreminder.database.DBHelper;
 import space.lala.nyxreminder.model.ReminderModel;
-import space.lala.nyxreminder.repository.FakeRepository;
 import space.lala.nyxreminder.repository.ReminderRepository;
+import space.lala.nyxreminder.repository.SqliteRepository;
 
 
 public class ViewReminderDialog extends DialogFragment {
 
     private static final String idKey = "idKey";
     private int id;
-    private ReminderRepository reminderRepository = new FakeRepository();
+    private DBHelper dbHelper;
+    private ReminderRepository repository;
     private TextView dateTime;
     private TextView title;
     private TextView description;
@@ -41,13 +42,16 @@ public class ViewReminderDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_reminder_dialog, container, false);
+
+        initDb();
+
         dateTime = view.findViewById(R.id.view_date_time);
         title = view.findViewById(R.id.view_dialog_title);
         description = view.findViewById(R.id.view_dialog_description);
 
         if (getArguments() != null) {
             id = getArguments().getInt(idKey);
-            ReminderModel reminderModel = reminderRepository.getReminder(id);
+            ReminderModel reminderModel = repository.getReminder(id);
             String titleString = reminderModel.getTitle();
             title.setText(titleString);
             String descString = reminderModel.getDescription();
@@ -57,6 +61,11 @@ public class ViewReminderDialog extends DialogFragment {
             dateTime.setText(getString(R.string.on_date_in_time, dateString, timeString));
         }
         return view;
+    }
+
+    private void initDb() {
+        dbHelper = new DBHelper(getContext());
+        repository = new SqliteRepository(dbHelper);
     }
 
     //Программная настройка ширины диалогового окна
