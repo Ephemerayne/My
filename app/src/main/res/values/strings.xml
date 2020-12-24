@@ -3,6 +3,7 @@
     <string name="edit_button">Изменить</string>
     <string name="on_date_in_time">%s в %s</string>
     <string name="on_date">%s</string>
+    <string name="on_time">%s</string>
     <string name="delete">Удалить</string>
     <string name="title_edit_text">Название</string>
     <string name="description_edit_text">Описание</string>

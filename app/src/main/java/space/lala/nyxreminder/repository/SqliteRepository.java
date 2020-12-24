@@ -80,13 +80,32 @@ public class SqliteRepository implements ReminderRepository {
     }
 
     @Override
-    public void updateReminder(int id) {
+    public void updateReminder(int id, ReminderModel reminderModel) {
+        LocalDateTime dateTime = reminderModel.getDateTime();
 
+        String title = reminderModel.getTitle();
+        String description = reminderModel.getDescription();
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthValue();
+        int day = dateTime.getDayOfMonth();
+        int hour = dateTime.getHour();
+        int minute = dateTime.getMinute();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ReminderContract.ReminderEntry.COLUMN_TITLE, title);
+        contentValues.put(ReminderContract.ReminderEntry.COLUMN_DESCRIPTION, description);
+        contentValues.put(ReminderContract.ReminderEntry.COLUMN_YEAR, year);
+        contentValues.put(ReminderContract.ReminderEntry.COLUMN_MONTH, month);
+        contentValues.put(ReminderContract.ReminderEntry.COLUMN_DAY, day);
+        contentValues.put(ReminderContract.ReminderEntry.COLUMN_HOUR, hour);
+        contentValues.put(ReminderContract.ReminderEntry.COLUMN_MINUTE, minute);
+
+        database.update(ReminderContract.ReminderEntry.TABLE_NAME, contentValues, ReminderContract.ReminderEntry._ID + "=?", new String[]{Integer.toString(id)});
     }
 
     @Override
     public void deleteReminder(int id) {
-        database.delete(ReminderContract.ReminderEntry.TABLE_NAME, ReminderContract.ReminderEntry._ID + "=?", new String []{Integer.toString(id)});
+        database.delete(ReminderContract.ReminderEntry.TABLE_NAME, ReminderContract.ReminderEntry._ID + "=?", new String[]{Integer.toString(id)});
     }
 
     @Override

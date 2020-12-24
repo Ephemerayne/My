@@ -10,7 +10,7 @@ public interface ReminderRepository {
 
     ReminderModel getReminder(int id);
 
-    void updateReminder(int id);
+    void updateReminder(int id, ReminderModel reminderModel);
 
     void deleteReminder(int id);
 

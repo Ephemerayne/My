@@ -35,7 +35,7 @@ public class FakeRepository implements ReminderRepository {
     }
 
     @Override
-    public void updateReminder(int id) {
+    public void updateReminder(int id, ReminderModel reminderModel) {
 
     }
 

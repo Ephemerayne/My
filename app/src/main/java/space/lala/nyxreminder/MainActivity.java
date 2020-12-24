@@ -74,16 +74,22 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
     }
 
     //метод открытия диалога редактирования напоминания
-    private void openAddEditDialog() {
+    public void openAddEditDialog(int id) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        AddEditReminderDialog.newInstance(id).show(transaction, "EDIT");
+    }
+
+    //метод открытия диалога редактирования напоминания
+    public void openAddEditDialog() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DialogFragment addEditReminderDialog = new AddEditReminderDialog();
-        addEditReminderDialog.show(transaction, "TAG");
+        addEditReminderDialog.show(transaction, "ADD");
     }
 
     //метод открытия диалога просмотра напоминания
     private void openViewDialog(int id) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ViewReminderDialog.newInstance(id).show(transaction, "tag");
+        ViewReminderDialog.newInstance(id).show(transaction, "OPEN");
     }
 
     @Override

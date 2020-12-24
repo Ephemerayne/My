@@ -15,14 +15,19 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
 import com.jakewharton.threetenabp.AndroidThreeTen;
+
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
 import org.threeten.bp.format.DateTimeFormatter;
+
+import java.util.Date;
 import java.util.Objects;
 
 import space.lala.nyxreminder.database.DBHelper;
@@ -34,6 +39,10 @@ import space.lala.nyxreminder.repository.SqliteRepository;
 
 public class AddEditReminderDialog extends DialogFragment {
 
+    private static final String idKey = "idKey";
+    private Integer id;
+    private ReminderRepository repository;
+    private DBHelper dbHelper;
     private EditText title;
     private EditText description;
     private TextView date;
@@ -42,6 +51,14 @@ public class AddEditReminderDialog extends DialogFragment {
     private Button cancel;
     private LocalDate reminderDate;
     private LocalTime reminderTime;
+
+    public static AddEditReminderDialog newInstance(int id) {
+        AddEditReminderDialog addEditReminderDialog = new AddEditReminderDialog();
+        Bundle args = new Bundle();
+        args.putInt(idKey, id);
+        addEditReminderDialog.setArguments(args);
+        return addEditReminderDialog;
+    }
 
     //Слушатель нажатия по дате
     DatePickerDialog.OnDateSetListener dateSetListener = (DatePicker datePicker, int year, int month, int day) -> {
@@ -79,20 +96,38 @@ public class AddEditReminderDialog extends DialogFragment {
         save = view.findViewById(R.id.button_save_reminder);
         cancel = view.findViewById(R.id.button_cancel_edit_reminder);
 
+        initDb();
+
         //инициализация листенеров (слушателей кликов(событий))
         initListeners();
 
         //метод установки текущей даты и времени в окно добавления/изменения напоминания
         fillInDefaultDateTime();
 
+        if (getArguments() != null) {
+            openEditVersion(getArguments().getInt(idKey));
+            id = getArguments().getInt(idKey);
+        }
+
         return view;
+    }
+
+    private void initDb() {
+        dbHelper = new DBHelper(getContext());
+        repository = new SqliteRepository(dbHelper);
     }
 
     //метод установки листенеров кнопок
     private void initListeners() {
         cancel.setOnClickListener(view -> dismiss());
 
-        save.setOnClickListener(view -> saveReminder(createReminder()));
+        save.setOnClickListener(view -> {
+            if (id == null) {
+                saveReminder(createReminder());
+            } else {
+                updateReminder(id);
+            }
+        });
 
         date.setOnClickListener(view -> showDatePicker());
 
@@ -198,9 +233,30 @@ public class AddEditReminderDialog extends DialogFragment {
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
         final Activity activity = getActivity();
-        if (activity instanceof  DialogInterface.OnDismissListener) {
+        if (activity instanceof DialogInterface.OnDismissListener) {
             ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
         }
+    }
+
+    private void openEditVersion(int id) {
+        ReminderModel reminderModel = repository.getReminder(id);
+        setReminderDataForEdit(reminderModel);
+    }
+
+    private void setReminderDataForEdit(ReminderModel reminderModel) {
+        String titleString = reminderModel.getTitle();
+        title.setText(titleString);
+        String descString = reminderModel.getDescription();
+        description.setText(descString);
+        String dateString = android.text.format.DateFormat.format("dd.MM.yy", new Date()).toString();
+        String timeString = android.text.format.DateFormat.format("hh:mm", new Date()).toString();
+        date.setText(getString(R.string.on_date, dateString));
+        time.setText(getString(R.string.on_time, timeString));
+    }
+
+    private void updateReminder(Integer id) {
+        repository.updateReminder(id, createReminder());
+        dismiss();
     }
 }
 
