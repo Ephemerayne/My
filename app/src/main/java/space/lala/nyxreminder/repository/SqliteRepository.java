@@ -86,7 +86,7 @@ public class SqliteRepository implements ReminderRepository {
 
     @Override
     public void deleteReminder(int id) {
-
+        database.delete(ReminderContract.ReminderEntry.TABLE_NAME, ReminderContract.ReminderEntry._ID + "=?", new String []{Integer.toString(id)});
     }
 
     @Override

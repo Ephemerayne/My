@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
     ReminderAdapter adapter;
     DBHelper dbHelper;
     ReminderRepository repository;
-    ImageView trashBasket;
     FloatingActionButton addReminderButton;
 
     //корзина в экшн баре
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
 
         initDb();
 
-        trashBasket = findViewById(R.id.icon_trash_basket);
         recyclerViewReminder = findViewById(R.id.recycler_view_reminders);
         addReminderButton = findViewById(R.id.add_button);
 
@@ -163,6 +162,8 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
             //удаление напоминания (по id) из БД (фейкового репозитория)
             repository.deleteReminder(id);
         }
+
+        requestReminders();
     }
 
     @Override
