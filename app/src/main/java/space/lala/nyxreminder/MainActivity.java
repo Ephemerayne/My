@@ -65,7 +65,25 @@ public class MainActivity extends AppCompatActivity implements OnReminderListene
         recyclerViewReminder.setAdapter(adapter);
 
         //обработка клика по плавающей кнопке добавления напоминания
-        addReminderButton.setOnClickListener(view -> openAddEditDialog());
+        addReminderButton.setOnClickListener(view -> {
+            openAddEditDialog();
+            disableSelectMode();
+        });
+    }
+
+    private void disableSelectMode() {
+        itemsToRemove.clear();
+        setSelectModeActive();
+        showDeleteButton(false);
+
+        ArrayList<ReminderModel> reminders = new ArrayList<>(adapter.getReminders());
+
+        for (ReminderModel reminderModel: reminders) {
+            if (reminderModel.isSelected()) {
+                reminderModel.setSelected(false);
+            }
+        }
+        adapter.setReminders(reminders);
     }
 
     private void initDb() {

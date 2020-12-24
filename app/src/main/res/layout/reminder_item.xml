@@ -14,11 +14,13 @@
 
         <TextView
             android:id="@+id/view_date"
-            android:textStyle="bold"
-            android:textSize="18sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/light_blue"
             android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
             tools:text="DATE" />
 
         <LinearLayout
@@ -29,6 +31,7 @@
             <TextView
                 android:id="@+id/view_title"
                 android:textStyle="bold"
+                android:layout_marginStart="10dp"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,6 +42,7 @@
                 android:id="@+id/view_time"
                 android:textStyle="bold"
                 android:textSize="15sp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -49,6 +53,7 @@
 
         <TextView
             android:id="@+id/view_description"
+            android:layout_marginStart="10dp"
             android:layout_marginBottom="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

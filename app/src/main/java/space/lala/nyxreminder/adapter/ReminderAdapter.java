@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import space.lala.nyxreminder.OnReminderListener;
@@ -24,6 +26,13 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderViewHolder> {
     }
 
     public void setReminders(List<ReminderModel> reminders) {
+        Collections.sort(reminders, (reminderModel, reminderModel2) -> {
+            if (reminderModel.getDateTime() == null || reminderModel2.getDateTime() == null) {
+                return 0;
+            }
+            return reminderModel.getDateTime().compareTo(reminderModel2.getDateTime());
+        });
+
         this.reminders.clear();
         this.reminders.addAll(reminders);
         notifyDataSetChanged();
@@ -43,7 +52,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ReminderViewHolder holder, int position) {
         ReminderModel reminder = reminders.get(position);
-        holder.setItemContent(reminder);
+        holder.setItemContent(reminder, reminders, position);
     }
 
     @Override

@@ -7,12 +7,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import space.lala.nyxreminder.OnReminderListener;
 import space.lala.nyxreminder.R;
+import space.lala.nyxreminder.database.ReminderContract;
 import space.lala.nyxreminder.model.ReminderModel;
 
 
@@ -36,7 +39,24 @@ public class ReminderViewHolder extends RecyclerView.ViewHolder implements View.
         this.onReminderListener = onReminderListener;
     }
 
-    public void setItemContent(ReminderModel model) {
+    public void setItemContent(ReminderModel model, ArrayList<ReminderModel> reminders, int position) {
+        if (position > 0) {
+            ReminderModel previousReminder = reminders.get(position - 1);
+            LocalDate previousDate = previousReminder.getDateTime().toLocalDate();
+            LocalDate currentDate = model.getDateTime().toLocalDate();
+
+            System.out.println("debug: " + previousDate.compareTo(currentDate));
+            if (previousDate.compareTo(currentDate) == 0) {
+                date.setVisibility(View.GONE);
+            } else {
+                date.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if (position == 0) {
+            date.setVisibility(View.VISIBLE);
+        }
+
         this.reminderId = model.getId();
 
         final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,8 @@ public class ViewReminderDialog extends DialogFragment {
     private TextView dateTime;
     private TextView title;
     private TextView description;
-    Button editReminder;
+    private Button editReminder;
+    private ImageButton close;
 
     public static ViewReminderDialog newInstance(int id) {
         ViewReminderDialog viewReminderDialog = new ViewReminderDialog();
@@ -51,22 +53,26 @@ public class ViewReminderDialog extends DialogFragment {
         title = view.findViewById(R.id.view_dialog_title);
         description = view.findViewById(R.id.view_dialog_description);
         editReminder = (Button) view.findViewById(R.id.view_dialog_button_edit);
+        close = view.findViewById(R.id.close_button_view_dialog);
 
         if (getArguments() != null) {
             id = getArguments().getInt(idKey);
             ReminderModel reminderModel = repository.getReminder(id);
             setReminderDataForAdd(reminderModel);
         }
-
-        editReminder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-                ((MainActivity) getActivity()).openAddEditDialog(id);
-            }
-        });
+        initListeners();
 
         return view;
+    }
+
+    private void initListeners() {
+
+        editReminder.setOnClickListener(view -> {
+            dismiss();
+            ((MainActivity) getActivity()).openAddEditDialog(id);
+        });
+
+        close.setOnClickListener(view -> dismiss());
     }
 
 
@@ -92,5 +98,10 @@ public class ViewReminderDialog extends DialogFragment {
         String dateString = android.text.format.DateFormat.format("dd.MM.yy", new Date()).toString();
         String timeString = android.text.format.DateFormat.format("hh:mm", new Date()).toString();
         dateTime.setText(getString(R.string.on_date_in_time, dateString, timeString));
+
+        //Скрывает строку с описанием напоминания, если она не была заполнена (убирает свободное пространство)
+        if (reminderModel.getDescription().isEmpty()) {
+            description.setVisibility(View.GONE);
+        }
     }
 }
