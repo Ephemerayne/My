@@ -6,12 +6,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-
 import space.lala.nyxreminder.OnReminderListener;
 import space.lala.nyxreminder.R;
 import space.lala.nyxreminder.model.ReminderModel;

@@ -1,10 +1,14 @@
 package space.lala.nyxreminder.adapter;
 
+import android.content.res.Resources;
+import android.text.Layout;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.threeten.bp.LocalDate;
@@ -45,7 +49,6 @@ public class ReminderViewHolder extends RecyclerView.ViewHolder implements View.
             LocalDate previousDate = previousReminder.getDateTime().toLocalDate();
             LocalDate currentDate = model.getDateTime().toLocalDate();
 
-            System.out.println("debug: " + previousDate.compareTo(currentDate));
             if (previousDate.compareTo(currentDate) == 0) {
                 date.setVisibility(View.GONE);
             } else {

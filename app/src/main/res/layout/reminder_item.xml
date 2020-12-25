@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <TextView
+        android:id="@+id/view_date"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="30dp"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="5dp"
+        android:background="@mipmap/image_date_background"
+        android:backgroundTint="#2C6991"
+        android:fontFamily="@font/andika"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="DATE" />
 
-        <TextView
-            android:id="@+id/view_date"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/light_blue"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="DATE" />
+    <LinearLayout
+        android:id="@+id/container_reminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,35 +35,39 @@
 
             <TextView
                 android:id="@+id/view_title"
-                android:textStyle="bold"
-                android:layout_marginStart="10dp"
-                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/andika"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:text="TITLE" />
 
             <TextView
                 android:id="@+id/view_time"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/andika"
                 android:gravity="end"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:text="TIME" />
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/view_description"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/andika"
+            android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="DESCRIPTION" />
-
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+
